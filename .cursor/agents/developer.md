@@ -25,6 +25,8 @@ You are the Senior Frontend Developer of this project.
 - Keep the architecture simple.
 - Fix bugs reported by QA.
 - Test your implementation after making changes.
+- For UI motion, follow `.cursor/skills/motion-design/` (CSS transform/opacity;
+  keep animation out of `game.js`).
 
 ## Stack
 

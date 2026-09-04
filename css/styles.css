@@ -29,8 +29,19 @@
   --tile-gap: calc(var(--tile-size) * 0.11);
   --header-h: 56px;
   --toast-h: 44px;
+
+  /* Motion identity — Corporate / mechanical board */
   --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-quick: 100ms;
+  --dur-standard: 280ms;
+  --dur-slow: 420ms;
+  --dur-press: 60ms;
+  --dur-release: 100ms;
+  --dur-flap: 320ms;
+  --dur-shake: 320ms;
+  --dur-win: 440ms;
 }
 
 *,
@@ -220,10 +231,10 @@ button:focus-visible {
   line-height: 1.2;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
   opacity: 0;
-  transform: translateY(6px);
+  transform: translateY(6px) scale(0.97);
   transition:
-    opacity 160ms var(--ease-out),
-    transform 160ms var(--ease-out);
+    opacity var(--dur-quick) var(--ease-out),
+    transform var(--dur-standard) var(--ease-out);
   max-width: 100%;
   text-align: center;
   pointer-events: none;
@@ -231,12 +242,15 @@ button:focus-visible {
 
 .toast.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .toast.is-leaving {
   opacity: 0;
-  transition: opacity 200ms var(--ease-out);
+  transform: translateY(4px) scale(0.98);
+  transition:
+    opacity var(--dur-quick) var(--ease-in),
+    transform var(--dur-quick) var(--ease-in);
 }
 
 .toast.is-win,
@@ -257,7 +271,10 @@ button:focus-visible {
   box-shadow:
     0 12px 36px rgba(0, 0, 0, 0.55),
     inset 0 3px 0 var(--go);
-  transform: translate(-50%, 8px);
+  transform: translate(-50%, 10px) scale(0.96);
+  transition:
+    opacity var(--dur-standard) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
 }
 
 .toast.is-lose {
@@ -269,7 +286,13 @@ button:focus-visible {
 .toast.is-win.is-visible,
 .toast.is-lose.is-visible,
 .toast:has(.toast-kicker).is-visible {
-  transform: translate(-50%, 0);
+  transform: translate(-50%, 0) scale(1);
+}
+
+.toast.is-win.is-leaving,
+.toast.is-lose.is-leaving,
+.toast:has(.toast-kicker).is-leaving {
+  transform: translate(-50%, 6px) scale(0.97);
 }
 
 .toast-kicker {
@@ -338,27 +361,27 @@ button:focus-visible {
 }
 
 .row.is-invalid {
-  animation: shake 420ms var(--ease-in-out);
+  animation: shake var(--dur-shake) var(--ease-in-out);
 }
 
 .row.is-win-bounce .tile {
-  animation: win-bounce 480ms var(--ease-out) both;
+  animation: win-bounce var(--dur-win) var(--ease-out) both;
 }
 
 .row.is-win-bounce .tile:nth-child(1) {
   animation-delay: 0ms;
 }
 .row.is-win-bounce .tile:nth-child(2) {
-  animation-delay: 80ms;
+  animation-delay: 60ms;
 }
 .row.is-win-bounce .tile:nth-child(3) {
-  animation-delay: 160ms;
+  animation-delay: 120ms;
 }
 .row.is-win-bounce .tile:nth-child(4) {
-  animation-delay: 240ms;
+  animation-delay: 180ms;
 }
 .row.is-win-bounce .tile:nth-child(5) {
-  animation-delay: 320ms;
+  animation-delay: 240ms;
 }
 
 .tile {
@@ -386,14 +409,14 @@ button:focus-visible {
   line-height: 1;
   padding-bottom: 4%;
   transform-style: preserve-3d;
-  transition: transform 350ms var(--ease-in-out);
+  transition: transform var(--dur-flap) var(--ease-in-out);
   user-select: none;
 }
 
 .tile--filled .tile-face {
   border-color: var(--steel);
   border-width: 2px;
-  animation: pop-in 90ms var(--ease-out);
+  animation: pop-in var(--dur-quick) var(--ease-out);
 }
 
 .tile--correct .tile-face {
@@ -415,11 +438,11 @@ button:focus-visible {
 }
 
 .tile.is-flipping .tile-face {
-  animation: flap 350ms var(--ease-in-out) forwards;
+  animation: flap var(--dur-flap) var(--ease-in-out) forwards;
 }
 
 .tile.is-resetting .tile-face {
-  animation: fade-reset 240ms var(--ease-out) forwards;
+  animation: fade-reset var(--dur-standard) var(--ease-out) forwards;
 }
 
 .help-tile {
@@ -493,7 +516,8 @@ button:focus-visible {
     background 180ms var(--ease-out),
     border-color 120ms var(--ease-out),
     color 180ms var(--ease-out),
-    transform 70ms var(--ease-out),
+    transform var(--dur-release) var(--ease-out),
+    filter var(--dur-release) var(--ease-out),
     opacity 160ms var(--ease-out);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -507,6 +531,13 @@ button:focus-visible {
 .key.is-pressed {
   transform: scale(0.96);
   filter: brightness(0.92);
+  transition:
+    transform var(--dur-press) var(--ease-out),
+    filter var(--dur-press) var(--ease-out),
+    background 180ms var(--ease-out),
+    border-color 120ms var(--ease-out),
+    color 180ms var(--ease-out),
+    opacity 160ms var(--ease-out);
 }
 
 .key--correct {
@@ -581,10 +612,22 @@ button:focus-visible {
   background: rgba(18, 20, 26, 0.7);
   padding: 16px;
   padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  opacity: 0;
+  transition: opacity var(--dur-standard) var(--ease-out);
 }
 
 .overlay[hidden] {
   display: none;
+}
+
+.overlay.is-open {
+  opacity: 1;
+}
+
+.overlay.is-closing {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-quick) var(--ease-in);
 }
 
 .help-card {
@@ -595,6 +638,24 @@ button:focus-visible {
   border-radius: 12px;
   padding: 24px 20px 20px;
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transform: translateY(18px) scale(0.96);
+  transition:
+    opacity var(--dur-standard) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+}
+
+.overlay.is-open .help-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.overlay.is-closing .help-card {
+  opacity: 0;
+  transform: translateY(12px) scale(0.97);
+  transition:
+    opacity var(--dur-quick) var(--ease-in),
+    transform var(--dur-quick) var(--ease-in);
 }
 
 .help-title {
@@ -658,32 +719,36 @@ button:focus-visible {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.08);
+    transform: scale(1.06);
   }
   100% {
     transform: scale(1);
   }
 }
 
+/* 3 decaying cycles — error feedback without lingering */
 @keyframes shake {
   0%,
   100% {
     transform: translateX(0);
   }
-  16% {
-    transform: translateX(-8px);
+  15% {
+    transform: translateX(-10px);
   }
-  33% {
-    transform: translateX(8px);
+  30% {
+    transform: translateX(9px);
   }
-  50% {
-    transform: translateX(-8px);
+  45% {
+    transform: translateX(-6px);
   }
-  66% {
-    transform: translateX(8px);
+  60% {
+    transform: translateX(4px);
   }
-  83% {
-    transform: translateX(-4px);
+  75% {
+    transform: translateX(-2px);
+  }
+  90% {
+    transform: translateX(1px);
   }
 }
 
@@ -708,7 +773,7 @@ button:focus-visible {
     transform: translateY(0);
   }
   40% {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
   }
   70% {
     transform: translateY(2px);
@@ -758,6 +823,11 @@ button:focus-visible {
 
   .help-card {
     border-radius: 14px;
+    transform: translateY(10px) scale(0.96);
+  }
+
+  .overlay.is-closing .help-card {
+    transform: translateY(8px) scale(0.97);
   }
 }
 
@@ -827,8 +897,16 @@ button:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .tile-face,
   .toast,
-  .key {
+  .key,
+  .overlay,
+  .help-card {
     transition-duration: 80ms !important;
+  }
+
+  .help-card,
+  .overlay.is-open .help-card,
+  .overlay.is-closing .help-card {
+    transform: none;
   }
 
   .toast.is-win,
@@ -836,8 +914,11 @@ button:focus-visible {
   .toast:has(.toast-kicker),
   .toast.is-win.is-visible,
   .toast.is-lose.is-visible,
-  .toast:has(.toast-kicker).is-visible {
-    transform: translate(-50%, 0);
+  .toast:has(.toast-kicker).is-visible,
+  .toast.is-win.is-leaving,
+  .toast.is-lose.is-leaving,
+  .toast:has(.toast-kicker).is-leaving {
+    transform: translate(-50%, 0) scale(1);
   }
 
   .tile.is-flipping .tile-face {
