@@ -1,0 +1,35 @@
+---
+description: Общий контекст проекта agent-game-ru для всех агентов
+alwaysApply: true
+---
+
+# agent-game-ru
+
+СЛОВО — браузерная угадайка: русское слово из 5 букв за 5 попыток.
+
+Стек:
+
+- HTML
+- CSS
+- Vanilla JavaScript (IIFE + `window`, без ES-модулей)
+
+Архитектура:
+
+- `index.html` — разметка и онбординг
+- `css/styles.css` — оформление
+- `js/words.js` — словарь (`solutions` + `validGuesses`)
+- `js/game.js` — чистая игровая логика без DOM
+- `js/ui.js` — DOM, ввод, анимации
+- `js/main.js` — точка входа
+
+Правила:
+
+- Keep the code simple.
+- Do not introduce frameworks.
+- Do not install dependencies unless necessary.
+- Game must work by opening index.html.
+- Keep game logic separate from UI logic.
+- Always test the game after making changes.
+- UI, словарь и клавиатура — на русском (кириллица А–Я, включая Ё).
+- Клавиатура экранная: ЙЦУКЕН, отдельная клавиша Ё.
+- `solutions ⊆ validGuesses`; слова ровно 5 букв, UPPERCASE.

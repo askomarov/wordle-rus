@@ -38,6 +38,5 @@ node_modules/
 # QA run screenshots (generated)
 docs/qa-screenshots/
 
-# Cursor local
-.cursor/
+# Local screenshots
 .tmp-screenshots-ru/
