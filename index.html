@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#12141A" />
+    <meta name="description" content="СЛОВО — угадай слово из 5 букв за 5 попыток." />
+    <title>СЛОВО</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Unbounded:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app" id="app">
+      <header class="header">
+        <div class="wordmark" aria-label="СЛОВО">
+          <span class="wordmark-tile">С</span>
+          <span class="wordmark-tile">Л</span>
+          <span class="wordmark-tile">О</span>
+          <span class="wordmark-tile">В</span>
+          <span class="wordmark-tile">О</span>
+        </div>
+        <div class="header-actions">
+          <button type="button" class="btn-icon" id="help-btn" aria-label="Как играть">?</button>
+          <button type="button" class="btn-new" id="new-game-btn">Новая игра</button>
+        </div>
+      </header>
+
+      <div class="toast-shelf" aria-live="polite">
+        <div class="toast" id="toast" hidden></div>
+      </div>
+
+      <main class="main">
+        <div class="board" id="board" aria-label="Игровое поле"></div>
+      </main>
+
+      <div class="keyboard" id="keyboard" aria-label="Клавиатура"></div>
+
+      <div class="error-banner" id="error-banner" hidden></div>
+    </div>
+
+    <div class="overlay" id="help-overlay" hidden>
+      <div class="help-card" role="dialog" aria-labelledby="help-title" aria-modal="true">
+        <h2 id="help-title" class="help-title">Как играть</h2>
+        <p class="help-lead">Угадай слово из 5 букв за 5 попыток.</p>
+        <ul class="help-examples">
+          <li>
+            <span class="tile tile--correct help-tile">С</span>
+            <span class="help-caption"><strong>Зелёный</strong> — буква на своём месте.</span>
+          </li>
+          <li>
+            <span class="tile tile--present help-tile">Л</span>
+            <span class="help-caption"><strong>Оранжевый</strong> — буква есть, но не здесь.</span>
+          </li>
+          <li>
+            <span class="tile tile--absent help-tile">О</span>
+            <span class="help-caption"><strong>Серый</strong> — такой буквы в слове нет.</span>
+          </li>
+        </ul>
+        <button type="button" class="btn-primary" id="help-got-it">Понятно</button>
+      </div>
+    </div>
+
+    <script src="js/words.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

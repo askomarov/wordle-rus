@@ -1,0 +1,43 @@
+# OS
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+Desktop.ini
+
+# Editors / IDE local
+.idea/
+*.swp
+*.swo
+*~
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Logs / temp
+*.log
+tmp/
+temp/
+.cache/
+
+# Local browser / agent artifacts
+.playwright-mcp/
+qa-*.png
+*-screenshot*.png
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+# QA run screenshots (generated)
+docs/qa-screenshots/
+
+# Cursor local
+.cursor/
+.tmp-screenshots-ru/
