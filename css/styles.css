@@ -455,27 +455,29 @@ button:focus-visible {
 /* —— Keyboard —— */
 
 .keyboard {
+  --key-gap: 4px;
+  --key-h: 48px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--key-gap);
+  /* Full app width — do not lock to board (RU has ~10 keys/row) */
   width: 100%;
-  max-width: calc(5 * var(--tile-size) + 4 * var(--tile-gap) + 8px);
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
   padding-bottom: 4px;
 }
 
 .keyboard-row {
   display: flex;
-  justify-content: center;
-  gap: 5px;
-  height: 50px;
+  justify-content: stretch;
+  gap: var(--key-gap);
+  height: var(--key-h);
 }
 
 .key {
   flex: 1 1 0;
   min-width: 0;
-  max-width: 44px;
   height: 100%;
   min-height: 44px;
   border: 1px solid var(--steel-dim);
@@ -483,7 +485,7 @@ button:focus-visible {
   background: var(--canvas-elev);
   font-family: var(--font-tile);
   font-weight: 600;
-  font-size: 14px;
+  font-size: clamp(13px, 3.6vw, 16px);
   letter-spacing: 0.02em;
   color: var(--paper);
   text-transform: uppercase;
@@ -537,12 +539,16 @@ button:focus-visible {
 
 .key--wide {
   flex: 1.55 1 0;
-  max-width: 68px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   letter-spacing: 0;
   text-transform: none;
+}
+
+.keyboard-row--actions .key--wide {
+  flex: 1 1 0;
+  max-width: none;
 }
 
 .key-icon {
@@ -729,17 +735,16 @@ button:focus-visible {
     padding: 16px 0 28px;
   }
 
-  .keyboard-row {
-    height: 48px;
+  .keyboard {
+    --key-gap: 5px;
+    --key-h: 50px;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .key {
-    font-size: 13px;
-    max-width: 42px;
-  }
-
-  .key--wide {
-    max-width: 64px;
+    font-size: 15px;
   }
 
   .key-icon {
@@ -758,8 +763,8 @@ button:focus-visible {
 
 @media (max-width: 640px) {
   .app {
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: 8px;
+    padding-right: 8px;
   }
 
   .btn-new {
@@ -768,22 +773,43 @@ button:focus-visible {
   }
 
   .keyboard {
+    --key-gap: 3px;
+    --key-h: 46px;
+    /* Bleed past app padding — more horizontal room for RU rows */
+    width: calc(100% + 10px);
+    margin-left: -5px;
+    margin-right: -5px;
     position: sticky;
     bottom: 0;
     padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
     background: linear-gradient(180deg, transparent, var(--canvas) 18%);
   }
 
-  .keyboard-row {
-    height: 48px;
+  .key {
+    font-size: clamp(12px, 3.8vw, 15px);
+  }
+}
+
+/* <375: ⌫/↵ on their own row; tighter gaps so 12 letter keys fit */
+@media (max-width: 374px) {
+  .keyboard {
+    --key-gap: 2px;
+  }
+
+  .keyboard--narrow .key {
+    font-size: clamp(11px, 3.4vw, 14px);
   }
 }
 
 @media (max-height: 700px) {
   :root {
-    --tile-size: clamp(48px, 11vh, 60px);
+    --tile-size: clamp(44px, 10vh, 56px);
     --header-h: 48px;
     --toast-h: 36px;
+  }
+
+  .keyboard {
+    --key-h: 42px;
   }
 
   .main {
@@ -832,17 +858,4 @@ button:focus-visible {
   .tile--filled .tile-face {
     animation: none;
   }
-}
-
-
-/* Russian layout: more keys per row */
-.keyboard .key {
-  min-width: 0;
-  flex: 1 1 0;
-  padding-inline: 0;
-  font-size: clamp(12px, 3.2vw, 15px);
-}
-
-.keyboard .key--wide {
-  flex: 1.35 1 0;
 }

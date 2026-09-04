@@ -19,11 +19,21 @@
   const TOAST_ERROR_MS = 1800;
   const PRESS_MS = 80;
 
-  const KEY_ROWS = [
+  // ≥375: classic 3-row ЙЦУКЕН. <375: letters only in 3 rows, ⌫/↵ on a 4th row.
+  const KEY_ROWS_WIDE = [
     ['Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ'],
     ['Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э'],
     ['Backspace', 'Ё', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', 'Enter'],
   ];
+
+  const KEY_ROWS_NARROW = [
+    ['Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ'],
+    ['Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э'],
+    ['Ё', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю'],
+    ['Backspace', 'Enter'],
+  ];
+
+  const NARROW_MQ = '(max-width: 374px)';
 
   function boot() {
     const checks = runSelfChecks();
@@ -49,6 +59,8 @@
     let rowEls = [];
     let tileEls = [];
     const keyEls = new Map();
+    const narrowMq = window.matchMedia(NARROW_MQ);
+    let narrowLayout = narrowMq.matches;
 
     buildBoard();
     buildKeyboard();
@@ -84,6 +96,18 @@
 
     window.addEventListener('keydown', onKeyDown);
 
+    const onNarrowChange = () => {
+      if (narrowMq.matches === narrowLayout) return;
+      narrowLayout = narrowMq.matches;
+      buildKeyboard();
+      renderKeyboard(game.getState());
+    };
+    if (typeof narrowMq.addEventListener === 'function') {
+      narrowMq.addEventListener('change', onNarrowChange);
+    } else {
+      narrowMq.addListener(onNarrowChange);
+    }
+
     function buildBoard() {
       els.board.innerHTML = '';
       rowEls = [];
@@ -114,10 +138,15 @@
     function buildKeyboard() {
       els.keyboard.innerHTML = '';
       keyEls.clear();
+      els.keyboard.classList.toggle('keyboard--narrow', narrowLayout);
 
-      for (const row of KEY_ROWS) {
+      const rows = narrowLayout ? KEY_ROWS_NARROW : KEY_ROWS_WIDE;
+      for (const row of rows) {
         const rowEl = document.createElement('div');
         rowEl.className = 'keyboard-row';
+        if (row.length === 2 && row[0] === 'Backspace' && row[1] === 'Enter') {
+          rowEl.classList.add('keyboard-row--actions');
+        }
         for (const key of row) {
           const btn = document.createElement('button');
           btn.type = 'button';
