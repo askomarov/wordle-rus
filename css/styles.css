@@ -150,6 +150,21 @@ button:focus-visible {
   border-color: var(--paper-dim);
 }
 
+a.btn-icon--link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--paper);
+  box-sizing: border-box;
+}
+
+.btn-icon-svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
 .btn-new {
   height: 40px;
   padding: 0 14px;
@@ -990,8 +1005,48 @@ button:focus-visible {
   }
 }
 
-/* <375: ⌫/↵ on their own row; tighter gaps so 12 letter keys fit */
+/* <375: compact header + tighter keyboard */
 @media (max-width: 374px) {
+  .header {
+    gap: 6px;
+  }
+
+  .wordmark {
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  .wordmark-tile {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+    border-radius: 4px;
+  }
+
+  .header-actions {
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .btn-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .btn-icon-svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .btn-new {
+    height: 34px;
+    padding: 0 8px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
   .keyboard {
     --key-gap: 2px;
   }
