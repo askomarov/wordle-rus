@@ -59,39 +59,66 @@
       <div class="error-banner" id="error-banner" hidden></div>
     </div>
 
-    <div class="overlay" id="help-overlay" hidden>
-      <div class="help-card" role="dialog" aria-labelledby="help-title" aria-modal="true">
-        <h2 id="help-title" class="help-title">Как играть</h2>
-        <p class="help-lead">Угадай слово из 5 букв за 5 попыток.</p>
-        <ul class="help-examples">
-          <li>
-            <span class="tile tile--correct help-tile">С</span>
-            <span class="help-caption"><strong>Зелёный</strong> — буква на своём месте.</span>
-          </li>
-          <li>
-            <span class="tile tile--present help-tile">Л</span>
-            <span class="help-caption"><strong>Оранжевый</strong> — буква есть, но не здесь.</span>
-          </li>
-          <li>
-            <span class="tile tile--absent help-tile">О</span>
-            <span class="help-caption"><strong>Серый</strong> — такой буквы в слове нет.</span>
-          </li>
-        </ul>
-        <p class="help-dict">
-          <a
-            class="help-dict-link"
-            href="words.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >Словарь — все слова</a>
-        </p>
-        <button type="button" class="btn-primary" id="help-got-it">Понятно</button>
+    <dialog id="help-dialog" class="help-dialog" closedby="any" aria-labelledby="help-title">
+      <h2 id="help-title" class="help-title">Как играть</h2>
+      <p class="help-lead">Угадай слово из 5 букв за 5 попыток.</p>
+      <ul class="help-examples">
+        <li>
+          <span class="tile tile--correct help-tile">С</span>
+          <span class="help-caption"><strong>Зелёный</strong> — буква на своём месте.</span>
+        </li>
+        <li>
+          <span class="tile tile--present help-tile">Л</span>
+          <span class="help-caption"><strong>Оранжевый</strong> — буква есть, но не здесь.</span>
+        </li>
+        <li>
+          <span class="tile tile--absent help-tile">О</span>
+          <span class="help-caption"><strong>Серый</strong> — такой буквы в слове нет.</span>
+        </li>
+      </ul>
+      <p class="help-dict">
+        <button type="button" class="help-dict-open" data-open-dict>Поиск по словарю</button>
+      </p>
+      <form method="dialog">
+        <button type="submit" class="btn-primary" id="help-got-it">Понятно</button>
+      </form>
+    </dialog>
+
+
+    <dialog id="dict-dialog" class="dict-dialog" closedby="any" aria-labelledby="dict-dialog-title">
+      <div class="dict-dialog-inner" data-words-search>
+        <div class="dict-dialog-header">
+          <div>
+            <h2 id="dict-dialog-title" class="dict-dialog-title">Словарь</h2>
+            <p class="dict-dialog-lead">
+              Маска из 5 слотов: буква фиксирует позицию, пусто или <kbd>_</kbd> — любая.
+            </p>
+          </div>
+        </div>
+            <div class="pattern-row" id="dict-pattern-row" role="group" aria-label="Маска из 5 букв">
+              <input class="pattern-slot" type="text" inputmode="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Буква 1" data-index="0" />
+              <input class="pattern-slot" type="text" inputmode="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Буква 2" data-index="1" />
+              <input class="pattern-slot" type="text" inputmode="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Буква 3" data-index="2" />
+              <input class="pattern-slot" type="text" inputmode="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Буква 4" data-index="3" />
+              <input class="pattern-slot" type="text" inputmode="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Буква 5" data-index="4" />
+            </div>
+        <p class="words-count" data-words-count aria-live="polite"></p>
+        <div class="words-list-wrap">
+          <ul class="words-list" data-words-list></ul>
+        </div>
+        <div class="dict-dialog-footer">
+          <form method="dialog">
+            <button type="submit" class="btn-primary">Закрыть</button>
+          </form>
+        </div>
       </div>
-    </div>
+    </dialog>
 
     <script src="js/words.js"></script>
+    <script src="js/words-page.js"></script>
     <script src="js/game.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/words-boot.js"></script>
   </body>
 </html>
