@@ -20,38 +20,38 @@
     <div class="app app--words" id="app">
       <header class="header">
         <a class="wordmark wordmark--link" href="index.html" aria-label="СЛОВО — на главную">
-          <span class="wordmark-tile">С</span>
-          <span class="wordmark-tile">Л</span>
-          <span class="wordmark-tile">О</span>
-          <span class="wordmark-tile">В</span>
-          <span class="wordmark-tile">О</span>
+          <span class="wordmark__tile">С</span>
+          <span class="wordmark__tile">Л</span>
+          <span class="wordmark__tile">О</span>
+          <span class="wordmark__tile">В</span>
+          <span class="wordmark__tile">О</span>
         </a>
-        <div class="header-actions">
-          <a class="btn-new" href="index.html">К игре</a>
+        <div class="header__actions">
+          <a class="btn btn--new" href="index.html">К игре</a>
         </div>
       </header>
 
-      <main class="words-page" data-words-search>
-        <h1 class="words-title">Словарь</h1>
-        <p class="words-lead">
+      <main class="words" data-words-search>
+        <h1 class="words__title">Словарь</h1>
+        <p class="words__lead">
           Все слова, которые можно ввести в игре. Задай маску из 5 слотов —
           буква фиксирует позицию, пусто или <kbd>_</kbd> — любая буква.
         </p>
 
-        <div class="pattern-row" id="pattern-row" role="group" aria-label="Маска из 5 букв">
-          <input class="pattern-slot" type="text" inputmode="text" maxlength="1" autocomplete="off"
+        <div class="pattern" id="pattern-row" role="group" aria-label="Маска из 5 букв">
+          <input class="pattern__slot" type="text" inputmode="text" maxlength="1" autocomplete="off"
             autocapitalize="characters" spellcheck="false" aria-label="Буква 1" data-index="0" />
-          <input class="pattern-slot" type="text" inputmode="text" maxlength="1" autocomplete="off"
+          <input class="pattern__slot" type="text" inputmode="text" maxlength="1" autocomplete="off"
             autocapitalize="characters" spellcheck="false" aria-label="Буква 2" data-index="1" />
-          <input class="pattern-slot" type="text" inputmode="text" maxlength="1" autocomplete="off"
+          <input class="pattern__slot" type="text" inputmode="text" maxlength="1" autocomplete="off"
             autocapitalize="characters" spellcheck="false" aria-label="Буква 3" data-index="2" />
-          <input class="pattern-slot" type="text" inputmode="text" maxlength="1" autocomplete="off"
+          <input class="pattern__slot" type="text" inputmode="text" maxlength="1" autocomplete="off"
             autocapitalize="characters" spellcheck="false" aria-label="Буква 4" data-index="3" />
-          <input class="pattern-slot" type="text" inputmode="text" maxlength="1" autocomplete="off"
+          <input class="pattern__slot" type="text" inputmode="text" maxlength="1" autocomplete="off"
             autocapitalize="characters" spellcheck="false" aria-label="Буква 5" data-index="4" />
         </div>
 
-        <p class="words-count" id="words-count" data-words-count aria-live="polite"></p>
+        <p class="words__count" id="words-count" data-words-count aria-live="polite"></p>
         <div class="words-list-wrap">
           <ul class="words-list" id="words-list" data-words-list></ul>
         </div>

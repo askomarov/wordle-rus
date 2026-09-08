@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#12141A" />
+    <meta name="description" content="Лидеры СЛОВО — таблица игроков: партии, победы и средние попытки." />
+    <title>Лидеры — СЛОВО</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Unbounded:wght@600;700&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body>
+    <div class="app app--words" id="app">
+      <header class="header">
+        <a class="wordmark wordmark--link" href="index.html" aria-label="СЛОВО — на главную">
+          <span class="wordmark__tile">С</span>
+          <span class="wordmark__tile">Л</span>
+          <span class="wordmark__tile">О</span>
+          <span class="wordmark__tile">В</span>
+          <span class="wordmark__tile">О</span>
+        </a>
+        <div class="header__actions">
+          <a class="btn btn--new" href="index.html">К игре</a>
+        </div>
+      </header>
+
+      <main class="score" data-score>
+        <h1 class="score__title">Лидеры</h1>
+        <p class="score__lead">
+          Сортировка по доле побед, при равенстве выше тот, кто угадывает за меньшее число
+          попыток.
+        </p>
+
+        <p class="score__me">
+          <span data-score-nick></span>
+          <button type="button" class="score__nick-edit" data-score-nick-edit>Сменить ник</button>
+        </p>
+
+        <p class="score__status" data-score-status aria-live="polite"></p>
+
+        <div class="score-table-wrap">
+          <table class="score-table" data-score-table hidden>
+            <thead>
+              <tr>
+                <th class="score-table__head score-table__cell--rank" scope="col">#</th>
+                <th class="score-table__head" scope="col">Игрок</th>
+                <th class="score-table__head score-table__cell--num" scope="col">Игр</th>
+                <th class="score-table__head score-table__cell--num" scope="col">Побед</th>
+                <th class="score-table__head score-table__cell--rate" scope="col">%</th>
+                <th class="score-table__head score-table__cell--num score-table__cell--attempts"
+                  scope="col">Попыток</th>
+              </tr>
+            </thead>
+            <tbody data-score-body></tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+
+    <dialog id="nick-dialog" class="nick-dialog" aria-labelledby="nick-dialog-title">
+      <form method="dialog">
+        <h2 id="nick-dialog-title" class="nick-dialog__title">Как тебя записать?</h2>
+        <p class="nick-dialog__lead">
+          Ник попадёт в таблицу лидеров вместе с результатами партий. Прошлые партии останутся
+          под старым ником.
+        </p>
+        <input
+          class="nick-dialog__input"
+          id="nick-input"
+          type="text"
+          name="player"
+          maxlength="24"
+          required
+          pattern=".*\S.*"
+          title="Ник не может состоять из одних пробелов"
+          autocomplete="nickname"
+          spellcheck="false"
+          placeholder="Например, Аня"
+          aria-label="Ник" />
+        <div class="nick-dialog__actions">
+          <button type="button" class="nick-dialog__skip" id="nick-skip">Отмена</button>
+          <button type="submit" class="btn btn--primary" id="nick-save" value="save">
+            Сохранить
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="js/config.js"></script>
+    <script src="js/score.js"></script>
+    <script src="js/nick.js"></script>
+    <script src="js/score-page.js"></script>
+    <script src="js/score-boot.js"></script>
+  </body>
+
+</html>

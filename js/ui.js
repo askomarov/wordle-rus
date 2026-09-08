@@ -54,9 +54,11 @@
       helpBtn: document.getElementById('help-btn'),
       helpDialog: document.getElementById('help-dialog'),
       errorBanner: document.getElementById('error-banner'),
+      nickDialog: document.getElementById('nick-dialog'),
     };
 
     const game = createGame();
+    let roundStartedAt = Date.now();
     let toastTimer = null;
     let persistentToast = false;
     let rowEls = [];
@@ -126,7 +128,7 @@
           tile.dataset.row = String(r);
           tile.dataset.col = String(c);
           const face = document.createElement('div');
-          face.className = 'tile-face';
+          face.className = 'tile__face';
           tile.appendChild(face);
           row.appendChild(tile);
           tiles.push(tile);
@@ -145,9 +147,9 @@
       const rows = narrowLayout ? KEY_ROWS_NARROW : KEY_ROWS_WIDE;
       for (const row of rows) {
         const rowEl = document.createElement('div');
-        rowEl.className = 'keyboard-row';
+        rowEl.className = 'keyboard__row';
         if (row.length === 2 && row[0] === 'Backspace' && row[1] === 'Enter') {
-          rowEl.classList.add('keyboard-row--actions');
+          rowEl.classList.add('keyboard__row--actions');
         }
         for (const key of row) {
           const btn = document.createElement('button');
@@ -157,14 +159,14 @@
           if (key === 'Enter') {
             btn.classList.add('key--wide');
             btn.innerHTML =
-              '<svg class="key-icon" viewBox="0 0 24 24" aria-hidden="true">' +
+              '<svg class="key__icon" viewBox="0 0 24 24" aria-hidden="true">' +
               '<path fill="currentColor" d="M19 7v4H5.83l3.58-3.59L8 6l-6 6 6 6 1.41-1.41L5.83 13H21V7z"/>' +
               '</svg>';
             btn.setAttribute('aria-label', 'Ввод');
           } else if (key === 'Backspace') {
             btn.classList.add('key--wide');
             btn.innerHTML =
-              '<svg class="key-icon" viewBox="0 0 24 24" aria-hidden="true">' +
+              '<svg class="key__icon" viewBox="0 0 24 24" aria-hidden="true">' +
               '<path fill="currentColor" d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89H22c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-3 12.59L17.59 17 14 13.41 10.41 17 9 15.59 12.59 12 9 8.41 10.41 7 14 10.59 17.59 7 19 8.41 15.41 12 19 15.59z"/>' +
               '</svg>';
             btn.setAttribute('aria-label', 'Стереть');
@@ -193,7 +195,7 @@
         for (let c = 0; c < WORD_LENGTH; c++) {
           const cell = state.board[r][c];
           const tile = tileEls[r][c];
-          const face = tile.querySelector('.tile-face');
+          const face = tile.querySelector('.tile__face');
           const prevLetter = face.textContent;
           face.textContent = cell.letter;
 
@@ -235,13 +237,13 @@
 
     function updateCta(state) {
       const btn = els.newGameBtn;
-      btn.classList.remove('is-primary', 'is-win');
+      btn.classList.remove('btn--primary', 'btn--win');
       if (state.status === STATUS.WON) {
         btn.textContent = 'Ещё раз';
-        btn.classList.add('is-win');
+        btn.classList.add('btn--win');
       } else if (state.status === STATUS.LOST) {
         btn.textContent = 'Ещё раз';
-        btn.classList.add('is-primary');
+        btn.classList.add('btn--primary');
       } else {
         btn.textContent = 'Новая игра';
       }
@@ -257,15 +259,15 @@
 
     function resultToastHtml(kicker, titleHtml) {
       return (
-        `<div class="toast-kicker">${escapeHtml(kicker)}</div>` +
-        `<div class="toast-title">${titleHtml}</div>`
+        `<div class="toast__kicker">${escapeHtml(kicker)}</div>` +
+        `<div class="toast__title">${titleHtml}</div>`
       );
     }
 
     function applyToastKind(kind) {
-      els.toast.classList.remove('is-win', 'is-lose');
-      if (kind === 'win') els.toast.classList.add('is-win');
-      if (kind === 'lose') els.toast.classList.add('is-lose');
+      els.toast.classList.remove('toast--win', 'toast--lose');
+      if (kind === 'win') els.toast.classList.add('toast--win');
+      if (kind === 'lose') els.toast.classList.add('toast--lose');
     }
 
     function showToast(message, { persistent = false, html = false, kind } = {}) {
@@ -297,12 +299,12 @@
       }
       persistentToast = false;
       els.toast.classList.add('is-leaving');
-      els.toast.classList.remove('is-visible', 'is-win', 'is-lose');
+      els.toast.classList.remove('is-visible', 'toast--win', 'toast--lose');
       setTimeout(() => {
         if (!els.toast.classList.contains('is-visible')) {
           els.toast.hidden = true;
           els.toast.textContent = '';
-          els.toast.classList.remove('is-leaving', 'is-win', 'is-lose');
+          els.toast.classList.remove('is-leaving', 'toast--win', 'toast--lose');
         }
       }, 220);
     }
@@ -337,7 +339,7 @@
 
       for (let c = 0; c < WORD_LENGTH; c++) {
         const tile = tileEls[rowIndex][c];
-        const face = tile.querySelector('.tile-face');
+        const face = tile.querySelector('.tile__face');
         const state = evaluation[c];
         const letter = face.textContent;
 
@@ -383,6 +385,7 @@
       await sleep(prefersReducedMotion() ? 80 : 220);
 
       const state = game.newGame();
+      roundStartedAt = Date.now();
       for (const row of tileEls) {
         for (const tile of row) {
           tile.classList.remove('is-resetting');
@@ -391,6 +394,20 @@
       renderBoard(state, { instant: true });
       renderKeyboard(state);
       updateCta(state);
+    }
+
+    async function submitResult(payload) {
+      if (!global.AgentScore || !global.AgentScore.isConfigured()) return;
+
+      let player = global.AgentScore.getPlayer();
+      if (!player && global.AgentNick) {
+        player = global.AgentScore.setPlayer(await global.AgentNick.ask());
+      }
+      // отказ не должен терять партию: пишем анонимом, пока ник не сменят
+      if (!player) player = global.AgentScore.setPlayer(global.AgentScore.anonPlayer());
+      if (!player) return;
+
+      global.AgentScore.submitGame(payload);
     }
 
     function openHelp() {
@@ -406,6 +423,7 @@
       const dictDialog = document.getElementById('dict-dialog');
       if (dictDialog && dictDialog.open) return;
       if (els.helpDialog && els.helpDialog.open) return;
+      if (els.nickDialog && els.nickDialog.open) return;
 
       if (e.ctrlKey || e.metaKey || e.altKey) return;
 
@@ -473,6 +491,8 @@
       renderKeyboard(after);
       updateCta(after);
 
+      const durationMs = Date.now() - roundStartedAt;
+
       if (result.won) {
         await sleep(120);
         await bounceWinRow(result.submittedRow);
@@ -483,11 +503,20 @@
         });
       } else if (result.lost) {
         const answerHtml =
-          `Слово: <span class="answer-word">${escapeHtml(result.answer)}</span>`;
+          `Слово: <span class="toast__answer">${escapeHtml(result.answer)}</span>`;
         showToast(resultToastHtml('Попытки кончились', answerHtml), {
           persistent: true,
           html: true,
           kind: 'lose',
+        });
+      }
+
+      if (result.won || result.lost) {
+        submitResult({
+          word: result.answer,
+          attempts: result.attempt,
+          won: result.won,
+          durationMs: durationMs,
         });
       }
     }

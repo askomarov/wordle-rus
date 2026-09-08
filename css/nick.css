@@ -1,0 +1,118 @@
+/* Block: nick-dialog */
+
+.nick-dialog {
+  width: min(360px, calc(100vw - 24px));
+  margin: auto;
+  padding: 24px 20px 20px;
+  border: 1px solid var(--steel-dim);
+  border-radius: 12px;
+  background: var(--canvas-elev);
+  color: var(--paper);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transform: translateY(14px) scale(0.96);
+  transition-property: opacity, transform, display, overlay;
+  transition-duration: var(--dur-slow);
+  transition-timing-function: var(--ease-out);
+  transition-behavior: allow-discrete;
+}
+
+.nick-dialog[open] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+}
+
+.nick-dialog::backdrop {
+  background-color: rgba(18, 20, 26, 0);
+  transition:
+    display var(--dur-slow) allow-discrete,
+    overlay var(--dur-slow) allow-discrete,
+    background-color var(--dur-slow) var(--ease-out);
+}
+
+.nick-dialog[open]::backdrop {
+  background-color: rgba(18, 20, 26, 0.72);
+
+  @starting-style {
+    background-color: rgba(18, 20, 26, 0);
+  }
+}
+
+.nick-dialog form {
+  margin: 0;
+}
+
+.nick-dialog__title {
+  margin: 0 0 8px;
+  font-family: var(--font-ui);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--paper);
+}
+
+.nick-dialog__lead {
+  margin: 0 0 16px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--paper-dim);
+}
+
+.nick-dialog__input {
+  width: 100%;
+  height: 48px;
+  box-sizing: border-box;
+  padding: 0 12px;
+  border: 2px solid var(--steel);
+  border-radius: var(--radius-key);
+  background: var(--canvas);
+  color: var(--paper);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 600;
+  caret-color: var(--paper);
+  outline: none;
+  transition: border-color var(--dur-quick) var(--ease-out);
+}
+
+.nick-dialog__input:focus {
+  border-color: var(--paper);
+}
+
+.nick-dialog__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.nick-dialog__skip {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--paper-dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.nick-dialog__skip:hover {
+  color: var(--paper);
+}
+
+.nick-dialog__actions .btn--primary {
+  width: auto;
+  min-width: 120px;
+  height: 40px;
+  margin-top: 0;
+  padding: 0 16px;
+}

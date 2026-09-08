@@ -1,0 +1,175 @@
+/* Blocks: score, score-table */
+
+.score {
+  flex: 1;
+  padding: 8px 0 32px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.score__title {
+  margin: 0 0 8px;
+  font-family: var(--font-ui);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--paper);
+}
+
+.score__lead {
+  margin: 0 0 20px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--paper-dim);
+}
+
+.score__me {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: var(--paper-dim);
+}
+
+.score__nick-edit {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--paper);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.score__nick-edit:hover {
+  color: var(--go);
+}
+
+.score__status {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--paper-dim);
+  text-align: center;
+}
+
+.score-table-wrap {
+  max-height: 100%;
+  overflow-y: auto;
+  scrollbar-color: var(--paper) var(--canvas-elev);
+  scrollbar-width: thin;
+}
+
+.score-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 6px;
+}
+
+.score-table__head {
+  padding: 0 6px 6px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.score-table__row {
+  animation: score-row-in var(--dur-standard) var(--ease-out) backwards;
+  animation-delay: calc(var(--i, 0) * 24ms);
+}
+
+.score-table__cell {
+  padding: 9px 6px;
+  border-top: 1px solid var(--steel-dim);
+  border-bottom: 1px solid var(--steel-dim);
+  background: var(--canvas-elev);
+  font-family: var(--font-tile);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--paper);
+  white-space: nowrap;
+}
+
+.score-table__cell:first-child {
+  border-left: 1px solid var(--steel-dim);
+  border-top-left-radius: var(--radius-key);
+  border-bottom-left-radius: var(--radius-key);
+}
+
+/* Правый край рисует последняя видимая ячейка: --attempts скрыта ниже 375px */
+.score-table__cell--rate {
+  border-right: 1px solid var(--steel-dim);
+  border-top-right-radius: var(--radius-key);
+  border-bottom-right-radius: var(--radius-key);
+}
+
+.score-table__cell--rank {
+  width: 1%;
+  color: var(--paper-dim);
+  text-align: center;
+}
+
+.score-table__cell--player {
+  max-width: 0;
+  width: 99%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-ui);
+  letter-spacing: 0.02em;
+}
+
+.score-table__cell--num,
+.score-table__cell--rate {
+  width: 1%;
+  text-align: right;
+}
+
+.score-table__cell--rate {
+  color: var(--go);
+}
+
+.score-table__cell--attempts {
+  display: none;
+}
+
+.score-table__row.is-me .score-table__cell {
+  border-color: var(--paper-dim);
+}
+
+.score-table__row.is-me .score-table__cell--player {
+  color: var(--paper);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (min-width: 375px) {
+  .score-table__cell--attempts {
+    display: table-cell;
+    border-right: 1px solid var(--steel-dim);
+    border-top-right-radius: var(--radius-key);
+    border-bottom-right-radius: var(--radius-key);
+  }
+
+  .score-table__cell--rate {
+    border-right: 0;
+    border-radius: 0;
+  }
+
+  .score-table__cell,
+  .score-table__head {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}

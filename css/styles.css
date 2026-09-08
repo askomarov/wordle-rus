@@ -1,4 +1,15 @@
-/* СЛОВО — entry (imports modules) */
+/* СЛОВО — entry (BEM blocks, mobile-first) */
+@import url("tokens.css");
 @import url("base.css");
+@import url("app.css");
+@import url("header.css");
+@import url("button.css");
+@import url("board.css");
+@import url("keyboard.css");
+@import url("toast.css");
+@import url("help.css");
+@import url("dict.css");
 @import url("words.css");
+@import url("score.css");
+@import url("nick.css");
 @import url("motion.css");

@@ -1,0 +1,80 @@
+/* Blocks: header, wordmark */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  height: var(--header-h);
+  flex-shrink: 0;
+  margin-top: env(safe-area-inset-top, 0px);
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* На мобильных три иконки и «Новая игра» не влезают рядом с логотипом.
+   Селектор из двух классов — button.css импортируется позже header.css */
+.header__actions .header__repo {
+  display: none;
+}
+
+.wordmark {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.wordmark--link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.wordmark__tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--steel);
+  border-radius: 4px;
+  font-family: var(--font-tile);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--paper);
+  line-height: 1;
+  padding-bottom: 1px;
+}
+
+@media (min-width: 375px) {
+  .header {
+    gap: 0;
+  }
+
+  .header__actions {
+    gap: 8px;
+    min-width: auto;
+  }
+
+  .wordmark {
+    gap: 4px;
+  }
+
+  .wordmark__tile {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+}
+
+@media (min-width: 440px) {
+  .header__actions .header__repo {
+    display: inline-flex;
+  }
+}

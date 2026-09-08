@@ -1,5 +1,4 @@
-/* Motion + responsive */
-/* —— Animations —— */
+/* Keyframes + prefers-reduced-motion only */
 
 @keyframes pop-in {
   0% {
@@ -67,6 +66,17 @@
   }
 }
 
+@keyframes score-row-in {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes fade-reset {
   0% {
     opacity: 1;
@@ -76,181 +86,53 @@
   }
 }
 
-@media (min-width: 641px) {
-  .app {
-    padding-top: max(24px, calc(12vh - 40px));
-    padding-bottom: 32px;
-    justify-content: flex-start;
-  }
-
-  .main {
-    padding: 16px 0 28px;
-  }
-
-  .keyboard {
-    --key-gap: 5px;
-    --key-h: 50px;
-    max-width: 420px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .key {
-    font-size: 15px;
-  }
-
-  .key-icon {
-    width: 26px;
-    height: 26px;
-  }
-
-  .help-dialog {
-    align-items: center;
-    border-radius: 14px;
-  }
-}
-
-@media (max-width: 640px) {
-  .app {
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-
-  .btn-new {
-    font-size: 13px;
-    padding: 0 12px;
-  }
-
-  .keyboard {
-    --key-gap: 3px;
-    --key-h: 46px;
-    /* Bleed past app padding — more horizontal room for RU rows */
-    width: calc(100% + 10px);
-    margin-left: -5px;
-    margin-right: -5px;
-    position: sticky;
-    bottom: 0;
-    padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
-    background: linear-gradient(180deg, transparent, var(--canvas) 18%);
-  }
-
-  .key {
-    font-size: clamp(12px, 3.8vw, 15px);
-  }
-}
-
-/* <375: compact header + tighter keyboard */
-@media (max-width: 374px) {
-  .header {
-    gap: 6px;
-  }
-
-  .wordmark {
-    gap: 2px;
-    flex-shrink: 0;
-  }
-
-  .wordmark-tile {
-    width: 24px;
-    height: 24px;
-    font-size: 11px;
-    border-radius: 4px;
-  }
-
-  .header-actions {
-    gap: 4px;
-    min-width: 0;
-  }
-
-  .btn-icon {
-    width: 34px;
-    height: 34px;
-    font-size: 14px;
-    flex-shrink: 0;
-  }
-
-  .btn-icon-svg {
-    width: 17px;
-    height: 17px;
-  }
-
-  .btn-new {
-    height: 34px;
-    padding: 0 8px;
-    font-size: 12px;
-    white-space: nowrap;
-  }
-
-  .keyboard {
-    --key-gap: 2px;
-  }
-
-  .keyboard--narrow .key {
-    font-size: clamp(11px, 3.4vw, 14px);
-  }
-}
-
-@media (max-height: 700px) {
-  :root {
-    --tile-size: clamp(44px, 10vh, 56px);
-    --header-h: 48px;
-    --toast-h: 36px;
-  }
-
-  .keyboard {
-    --key-h: 42px;
-  }
-
-  .main {
-    padding: 4px 0 12px;
-  }
-
-  .toast.is-win,
-  .toast.is-lose,
-  .toast:has(.toast-kicker) {
-    padding: 12px 22px 14px;
-    min-width: 184px;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .tile-face,
+  .tile__face,
   .toast,
   .key,
   .help-dialog,
   .help-dialog::backdrop,
   .dict-dialog,
-  .dict-dialog::backdrop {
+  .dict-dialog::backdrop,
+  .nick-dialog,
+  .nick-dialog::backdrop {
     transition-duration: 80ms !important;
   }
 
   .help-dialog,
   .help-dialog[open],
   .dict-dialog,
-  .dict-dialog[open] {
+  .dict-dialog[open],
+  .nick-dialog,
+  .nick-dialog[open] {
     transform: none;
   }
 
   @starting-style {
     .help-dialog[open],
-    .dict-dialog[open] {
+    .dict-dialog[open],
+    .nick-dialog[open] {
       transform: none;
     }
   }
 
-  .toast.is-win,
-  .toast.is-lose,
-  .toast:has(.toast-kicker),
-  .toast.is-win.is-visible,
-  .toast.is-lose.is-visible,
-  .toast:has(.toast-kicker).is-visible,
-  .toast.is-win.is-leaving,
-  .toast.is-lose.is-leaving,
-  .toast:has(.toast-kicker).is-leaving {
+  .score-table__row {
+    animation: none;
+  }
+
+  .toast--win,
+  .toast--lose,
+  .toast:has(.toast__kicker),
+  .toast--win.is-visible,
+  .toast--lose.is-visible,
+  .toast:has(.toast__kicker).is-visible,
+  .toast--win.is-leaving,
+  .toast--lose.is-leaving,
+  .toast:has(.toast__kicker).is-leaving {
     transform: translate(-50%, 0) scale(1);
   }
 
-  .tile.is-flipping .tile-face {
+  .tile.is-flipping .tile__face {
     animation: none;
     transition: background 150ms linear, color 150ms linear, border-color 150ms linear;
   }
@@ -265,15 +147,7 @@
     animation: none;
   }
 
-  .tile--filled .tile-face {
+  .tile--filled .tile__face {
     animation: none;
   }
-}
-
-
-.words-list-wrap {
-  max-height: 100%;
-  overflow-y: auto;
-  scrollbar-color: var(--paper) var(--canvas-elev);
-  scrollbar-width: thin;
 }

@@ -33,7 +33,7 @@
     const labels = opts.labels;
     const words = sortedWords(opts.locale);
 
-    const slots = Array.from(root.querySelectorAll('.pattern-slot'));
+    const slots = Array.from(root.querySelectorAll('.pattern__slot'));
     const listEl = root.querySelector('[data-words-list]');
     const countEl = root.querySelector('[data-words-count]');
     if (!slots.length || !listEl || !countEl) return null;
@@ -73,7 +73,7 @@
       const frag = document.createDocumentFragment();
       for (let i = 0; i < filtered.length; i++) {
         const li = document.createElement('li');
-        li.className = 'words-list-item';
+        li.className = 'words-list__item';
         li.textContent = filtered[i];
         frag.appendChild(li);
       }

@@ -1,0 +1,133 @@
+/* Block: help-dialog */
+
+.help-dialog form {
+  margin: 0;
+}
+
+.help-dialog {
+  width: min(400px, calc(100vw - 24px));
+  margin: auto;
+  padding: 24px 20px 20px;
+  border: 1px solid var(--steel-dim);
+  border-radius: 12px;
+  background: var(--canvas-elev);
+  color: var(--paper);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transform: translateY(14px) scale(0.96);
+  transition-property: opacity, transform, display, overlay;
+  transition-duration: var(--dur-slow);
+  transition-timing-function: var(--ease-out);
+  transition-behavior: allow-discrete;
+}
+
+.help-dialog[open] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+}
+
+.help-dialog::backdrop {
+  background-color: rgba(18, 20, 26, 0);
+  transition:
+    display var(--dur-slow) allow-discrete,
+    overlay var(--dur-slow) allow-discrete,
+    background-color var(--dur-slow) var(--ease-out);
+}
+
+.help-dialog[open]::backdrop {
+  background-color: rgba(18, 20, 26, 0.72);
+
+  @starting-style {
+    background-color: rgba(18, 20, 26, 0);
+  }
+}
+
+.help-dialog__title {
+  margin: 0 0 8px;
+  font-family: var(--font-ui);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--paper);
+}
+
+.help-dialog__lead {
+  margin: 0 0 20px;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--paper);
+}
+
+.help-dialog__examples {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.help-dialog__examples li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.help-dialog__caption {
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--paper-dim);
+}
+
+.help-dialog__caption strong {
+  color: var(--paper);
+  font-weight: 600;
+}
+
+.help-dialog__dict {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  align-items: center;
+}
+
+.help-dialog__dict-link {
+  color: var(--paper);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.help-dialog__dict-link:hover {
+  color: var(--go);
+}
+
+.help-dialog__dict-open {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--paper);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.help-dialog__dict-open:hover {
+  color: var(--go);
+}
+
+@media (min-width: 641px) {
+  .help-dialog {
+    align-items: center;
+    border-radius: 14px;
+  }
+}

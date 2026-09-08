@@ -16,11 +16,20 @@ alwaysApply: true
 Архитектура:
 
 - `index.html` — разметка и онбординг
-- `css/styles.css` — оформление
+- `words.html`, `score.html` — словарь и таблица лидеров
+- `css/styles.css` — entry (`@import` блоков)
+- `css/tokens.css` — design tokens (`:root`)
+- `css/base.css` — reset + document shell
+- `css/*.css` — БЭМ-блоки (`app`, `header`, `button`, `board`, `keyboard`, `toast`, `help`, `dict`, `words`, `score`, `nick`); media рядом с блоком, mobile-first (`min-width`)
+- `css/motion.css` — только `@keyframes` + `prefers-reduced-motion`
 - `js/words.js` — словарь (`solutions` + `validGuesses`)
 - `js/game.js` — чистая игровая логика без DOM
 - `js/ui.js` — DOM, ввод, анимации
 - `js/main.js` — точка входа
+- `js/config.js` — Supabase URL и publishable-ключ
+- `js/score.js` — запись партий и чтение лидерборда, без DOM
+- `js/score-page.js` + `js/score-boot.js` — таблица лидеров
+- `js/nick.js` — общий диалог ника (`AgentNick.ask` → `Promise<string>`)
 
 Правила:
 
@@ -33,3 +42,4 @@ alwaysApply: true
 - UI, словарь и клавиатура — на русском (кириллица А–Я, включая Ё).
 - Клавиатура экранная: ЙЦУКЕН, отдельная клавиша Ё.
 - `solutions ⊆ validGuesses`; слова ровно 5 букв, UPPERCASE.
+- CSS: БЭМ (`block`, `block__elem`, `block--mod`); эфемерные JS-состояния — `is-*`.

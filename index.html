@@ -19,30 +19,43 @@
     <div class="app" id="app">
       <header class="header">
         <div class="wordmark" aria-label="СЛОВО">
-          <span class="wordmark-tile">С</span>
-          <span class="wordmark-tile">Л</span>
-          <span class="wordmark-tile">О</span>
-          <span class="wordmark-tile">В</span>
-          <span class="wordmark-tile">О</span>
+          <span class="wordmark__tile">С</span>
+          <span class="wordmark__tile">Л</span>
+          <span class="wordmark__tile">О</span>
+          <span class="wordmark__tile">В</span>
+          <span class="wordmark__tile">О</span>
         </div>
-        <div class="header-actions">
-          <button type="button" class="btn-icon" id="help-btn" aria-label="Как играть">?</button>
+        <div class="header__actions">
+          <button type="button" class="btn btn--icon" id="help-btn" aria-label="Как играть">?</button>
           <a
-            class="btn-icon btn-icon--link"
+            class="btn btn--icon btn--icon-link"
+            href="score.html"
+            aria-label="Таблица лидеров"
+            title="Лидеры"
+          >
+            <svg class="btn__svg" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M4 20h3v-8H4v8zm6.5 0h3V4h-3v16zM17 20h3v-12h-3v12z"
+              />
+            </svg>
+          </a>
+          <a
+            class="btn btn--icon btn--icon-link header__repo"
             href="https://github.com/askomarov/wordle-rus"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Репозиторий на GitHub"
             title="GitHub"
           >
-            <svg class="btn-icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+            <svg class="btn__svg" viewBox="0 0 24 24" aria-hidden="true">
               <path
                 fill="currentColor"
                 d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"
               />
             </svg>
           </a>
-          <button type="button" class="btn-new" id="new-game-btn">Новая игра</button>
+          <button type="button" class="btn btn--new" id="new-game-btn">Новая игра</button>
         </div>
       </header>
 
@@ -60,60 +73,93 @@
     </div>
 
     <dialog id="help-dialog" class="help-dialog" closedby="any" aria-labelledby="help-title">
-      <h2 id="help-title" class="help-title">Как играть</h2>
-      <p class="help-lead">Угадай слово из 5 букв за 5 попыток.</p>
-      <ul class="help-examples">
+      <h2 id="help-title" class="help-dialog__title">Как играть</h2>
+      <p class="help-dialog__lead">Угадай слово из 5 букв за 5 попыток.</p>
+      <ul class="help-dialog__examples">
         <li>
-          <span class="tile tile--correct help-tile">С</span>
-          <span class="help-caption"><strong>Зелёный</strong> — буква на своём месте.</span>
+          <span class="tile tile--correct tile--help">С</span>
+          <span class="help-dialog__caption"><strong>Зелёный</strong> — буква на своём месте.</span>
         </li>
         <li>
-          <span class="tile tile--present help-tile">Л</span>
-          <span class="help-caption"><strong>Оранжевый</strong> — буква есть, но не здесь.</span>
+          <span class="tile tile--present tile--help">Л</span>
+          <span class="help-dialog__caption"><strong>Оранжевый</strong> — буква есть, но не здесь.</span>
         </li>
         <li>
-          <span class="tile tile--absent help-tile">О</span>
-          <span class="help-caption"><strong>Серый</strong> — такой буквы в слове нет.</span>
+          <span class="tile tile--absent tile--help">О</span>
+          <span class="help-dialog__caption"><strong>Серый</strong> — такой буквы в слове нет.</span>
         </li>
       </ul>
-      <p class="help-dict">
-        <button type="button" class="help-dict-open" data-open-dict>Поиск по словарю</button>
+      <p class="help-dialog__dict">
+        <button type="button" class="help-dialog__dict-open" data-open-dict>Поиск по словарю</button>
       </p>
       <form method="dialog">
-        <button type="submit" class="btn-primary" id="help-got-it">Понятно</button>
+        <button type="submit" class="btn btn--primary" id="help-got-it">Понятно</button>
       </form>
     </dialog>
 
 
     <dialog id="dict-dialog" class="dict-dialog" closedby="any" aria-labelledby="dict-dialog-title">
-      <div class="dict-dialog-inner" data-words-search>
-        <div class="dict-dialog-header">
+      <div class="dict-dialog__inner" data-words-search>
+        <div class="dict-dialog__header">
           <div>
-            <h2 id="dict-dialog-title" class="dict-dialog-title">Словарь</h2>
-            <p class="dict-dialog-lead">
+            <h2 id="dict-dialog-title" class="dict-dialog__title">Словарь</h2>
+            <p class="dict-dialog__lead">
               Маска из 5 слотов: буква фиксирует позицию, пусто или <kbd>_</kbd> — любая.
             </p>
           </div>
         </div>
-            <div class="pattern-row" id="dict-pattern-row" role="group" aria-label="Маска из 5 букв">
-              <input class="pattern-slot" type="text" inputmode="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Буква 1" data-index="0" />
-              <input class="pattern-slot" type="text" inputmode="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Буква 2" data-index="1" />
-              <input class="pattern-slot" type="text" inputmode="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Буква 3" data-index="2" />
-              <input class="pattern-slot" type="text" inputmode="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Буква 4" data-index="3" />
-              <input class="pattern-slot" type="text" inputmode="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Буква 5" data-index="4" />
-            </div>
-        <p class="words-count" data-words-count aria-live="polite"></p>
+        <div class="pattern" id="dict-pattern-row" role="group" aria-label="Маска из 5 букв">
+          <input class="pattern__slot" type="text" inputmode="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Буква 1" data-index="0" />
+          <input class="pattern__slot" type="text" inputmode="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Буква 2" data-index="1" />
+          <input class="pattern__slot" type="text" inputmode="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Буква 3" data-index="2" />
+          <input class="pattern__slot" type="text" inputmode="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Буква 4" data-index="3" />
+          <input class="pattern__slot" type="text" inputmode="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Буква 5" data-index="4" />
+        </div>
+        <p class="words__count" data-words-count aria-live="polite"></p>
         <div class="words-list-wrap">
           <ul class="words-list" data-words-list></ul>
         </div>
-        <div class="dict-dialog-footer">
+        <div class="dict-dialog__footer">
           <form method="dialog">
-            <button type="submit" class="btn-primary">Закрыть</button>
+            <button type="submit" class="btn btn--primary">Закрыть</button>
           </form>
         </div>
       </div>
     </dialog>
 
+    <dialog id="nick-dialog" class="nick-dialog" aria-labelledby="nick-dialog-title">
+      <form method="dialog">
+        <h2 id="nick-dialog-title" class="nick-dialog__title">Как тебя записать?</h2>
+        <p class="nick-dialog__lead">
+          Ник попадёт в таблицу лидеров вместе с результатами партий. Без ника партии
+          запишутся анонимно — сменить можно в таблице лидеров.
+        </p>
+        <input
+          class="nick-dialog__input"
+          id="nick-input"
+          type="text"
+          name="player"
+          maxlength="24"
+          required
+          pattern=".*\S.*"
+          title="Ник не может состоять из одних пробелов"
+          autocomplete="nickname"
+          spellcheck="false"
+          placeholder="Например, Аня"
+          aria-label="Ник"
+        />
+        <div class="nick-dialog__actions">
+          <button type="button" class="nick-dialog__skip" id="nick-skip">Играть анонимно</button>
+          <button type="submit" class="btn btn--primary" id="nick-save" value="save">
+            Сохранить
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="js/config.js"></script>
+    <script src="js/score.js"></script>
+    <script src="js/nick.js"></script>
     <script src="js/words.js"></script>
     <script src="js/words-page.js"></script>
     <script src="js/game.js"></script>

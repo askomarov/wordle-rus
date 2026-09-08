@@ -1,17 +1,6 @@
-/* Dictionary page + pattern search + dialog */
-/* —— Words / dictionary page —— */
+/* Blocks: words, words-list, error-banner */
 
-.app--words {
-  overflow: visible;
-  max-height: 100dvh;
-}
-
-.wordmark--link {
-  text-decoration: none;
-  color: inherit;
-}
-
-.words-page {
+.words {
   flex: 1;
   padding: 8px 0 32px;
   display: flex;
@@ -20,7 +9,7 @@
   min-height: 0;
 }
 
-.words-title {
+.words__title {
   margin: 0 0 8px;
   font-family: var(--font-ui);
   font-size: 20px;
@@ -28,14 +17,14 @@
   color: var(--paper);
 }
 
-.words-lead {
+.words__lead {
   margin: 0 0 20px;
   font-size: 14px;
   line-height: 1.45;
   color: var(--paper-dim);
 }
 
-.words-lead kbd {
+.words__lead kbd {
   font-family: var(--font-tile);
   font-size: 12px;
   padding: 1px 5px;
@@ -45,45 +34,19 @@
   background: var(--canvas-elev);
 }
 
-.pattern-row {
-  display: flex;
-  justify-content: center;
-  gap: var(--tile-gap);
-  margin-bottom: 16px;
-}
-
-.pattern-slot {
-  width: var(--tile-size);
-  height: var(--tile-size);
-  border: 2px solid var(--steel);
-  border-radius: var(--radius-tile);
-  background: var(--canvas-elev);
-  color: var(--paper);
-  font-family: var(--font-tile);
-  font-weight: 700;
-  font-size: calc(var(--tile-size) * 0.42);
-  text-align: center;
-  text-transform: uppercase;
-  caret-color: var(--paper);
-  padding: 0;
-  outline: none;
-  transition: border-color var(--dur-quick) var(--ease-out);
-}
-
-.pattern-slot.is-filled {
-  border-color: var(--paper-dim);
-}
-
-.pattern-slot:focus {
-  border-color: var(--paper);
-}
-
-.words-count {
+.words__count {
   margin: 0 0 12px;
   font-size: 13px;
   font-weight: 600;
   color: var(--paper-dim);
   text-align: center;
+}
+
+.words-list-wrap {
+  max-height: 100%;
+  overflow-y: auto;
+  scrollbar-color: var(--paper) var(--canvas-elev);
+  scrollbar-width: thin;
 }
 
 .words-list {
@@ -93,10 +56,9 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
   gap: 6px 8px;
-
 }
 
-.words-list-item {
+.words-list__item {
   font-family: var(--font-tile);
   font-size: 13px;
   font-weight: 600;
@@ -121,125 +83,3 @@
   font-weight: 600;
   z-index: 50;
 }
-
-
-/* —— Dictionary dialog (<dialog>) —— */
-/* Top-layer entry/exit: @starting-style + allow-discrete (animate-to-from-top-layer) */
-
-.dict-dialog {
-  width: min(440px, calc(100vw - 24px));
-  max-height: min(88dvh, 720px);
-  margin: auto;
-  padding: 0;
-  border: 1px solid var(--steel-dim);
-  border-radius: 12px;
-  background: var(--canvas-elev);
-  color: var(--paper);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
-  overflow: clip;
-  opacity: 0;
-  transform: translateY(14px) scale(0.96);
-  transition-property: opacity, transform, display, overlay;
-  transition-duration: var(--dur-slow);
-  transition-timing-function: var(--ease-out);
-  transition-behavior: allow-discrete;
-}
-
-.dict-dialog[open] {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-
-  @starting-style {
-    opacity: 0;
-    transform: translateY(14px) scale(0.96);
-  }
-}
-
-.dict-dialog::backdrop {
-  background-color: rgba(18, 20, 26, 0);
-  transition:
-    display var(--dur-slow) allow-discrete,
-    overlay var(--dur-slow) allow-discrete,
-    background-color var(--dur-slow) var(--ease-out);
-}
-
-.dict-dialog[open]::backdrop {
-  background-color: rgba(18, 20, 26, 0.72);
-
-  @starting-style {
-    background-color: rgba(18, 20, 26, 0);
-  }
-}
-
-.dict-dialog-inner {
-  display: flex;
-  flex-direction: column;
-  max-height: min(88dvh, 720px);
-  padding: 20px 16px 16px;
-  gap: 12px;
-
-}
-
-.dict-dialog-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.dict-dialog-title {
-  margin: 0;
-  font-family: var(--font-ui);
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--paper);
-}
-
-.dict-dialog-lead {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--paper-dim);
-}
-
-.dict-dialog-lead kbd {
-  font-family: var(--font-tile);
-  font-size: 12px;
-  padding: 1px 5px;
-  border: 1px solid var(--steel-dim);
-  border-radius: 4px;
-  color: var(--paper);
-}
-
-.dict-dialog .pattern-row {
-  margin: 4px 0;
-}
-
-.dict-dialog .words-count {
-  margin: 0;
-}
-
-.dict-dialog .words-list-wrap {
-  flex: 1 1 auto;
-  min-height: 120px;
-  max-height: none;
-  overflow-y: auto;
-  scrollbar-color: var(--paper) var(--canvas);
-  scrollbar-width: thin;
-}
-
-.dict-dialog-footer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-top: 4px;
-}
-
-.dict-dialog-footer .btn-primary {
-  width: auto;
-  min-width: 120px;
-  margin-top: 0;
-  height: 40px;
-  padding: 0 16px;
-}
-

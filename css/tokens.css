@@ -1,0 +1,52 @@
+/* Design tokens */
+:root {
+  --canvas: #12141a;
+  --canvas-elev: #181b23;
+  --steel-dim: #3a4150;
+  --steel: #5c6578;
+  --paper: #ede6d4;
+  --paper-dim: #9a9384;
+  --ink: #16130e;
+  --go: #1aa876;
+  --go-press: #159266;
+  --caution: #c46b38;
+  --caution-press: #a85a2e;
+  --off: #2a303c;
+  --off-letter: #8b93a1;
+  --toast-bg: #ede6d4;
+  --toast-ink: #16130e;
+  --danger-text: #c45c4a;
+  --focus: #ede6d4;
+
+  --font-tile: 'Unbounded', 'IBM Plex Sans', ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
+  --font-ui: 'IBM Plex Sans', ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
+
+  --radius-tile: 7px;
+  --radius-key: 5px;
+  --col-max: 520px;
+  --tile-size: clamp(48px, 12cqw, 68px);
+  --tile-gap: calc(var(--tile-size) * 0.11);
+  --header-h: 56px;
+  --toast-h: 44px;
+
+  /* Motion identity — Corporate / mechanical board */
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-quick: 100ms;
+  --dur-standard: 280ms;
+  --dur-slow: 420ms;
+  --dur-press: 60ms;
+  --dur-release: 100ms;
+  --dur-flap: 320ms;
+  --dur-shake: 320ms;
+  --dur-win: 440ms;
+}
+
+@media (max-height: 700px) {
+  :root {
+    --tile-size: clamp(44px, 10vh, 56px);
+    --header-h: 48px;
+    --toast-h: 36px;
+  }
+}
